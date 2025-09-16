@@ -180,6 +180,26 @@ export const useGetSessionMutation = () =>
             cacheTime: 10 * 60 * 1000, // Adjust as needed
           });
 
+          export const useGetNotification = ( search, page,notificationRead) =>{
+
+            return useQuery({
+               queryKey: ["getNotification",  search, page,notificationRead],
+               queryFn: async () =>{
+               console.log("getNotification queryFn executed"); // Add this line
+         
+                return await client(
+                   `notifications/me?search=${search || ""}&page=${page || 1}&notificationRead=${notificationRead ? 'true' : false}`
+                 )},
+         
+                 // refetchOnWindowFocus: false,
+                 //   refetchOnMount: false,
+                 //   refetchOnReconnect: false,
+                 //   enabled: false, 
+                   staleTime: 60000,
+                   cacheTime: 3600000
+              
+             })};
+
 // export const useGetOtp = () =>
 //   useMutation(
 //     async (email) =>

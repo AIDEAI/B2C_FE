@@ -2,7 +2,7 @@
   "name": "aideaib2cfe",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/b2c",
+  "homepage": "/b2c/",
   "dependencies": {
     "@ckeditor/ckeditor5-alignment": "^43.2.0",
     "@ckeditor/ckeditor5-build-classic": "^43.2.0",
@@ -30,6 +30,7 @@
     "moment-timezone": "^0.5.46",
     "pdfjs-dist": "^3.4.120",
     "pdfkit": "^0.17.1",
+    "pusher-js": "^8.4.0",
     "react": "^19.1.1",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",

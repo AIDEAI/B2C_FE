@@ -8,6 +8,7 @@ import PastPapers from "../pages/pastPapers/pastpapers.js";
 import PaperAttempt from "../pages/paperAttempt/paperAttempt.js";
 import Sessions from "../pages/sessions/sessions.js";
 import EvaluatedSession from "../pages/sessions/evaluatedSession.js";
+import Notification from "../pages/Notificarion/notification.js";
 function AppRoutes() {
   const UserRole =JSON.parse(localStorage.getItem('UserData'))
   console.log("🚀 ~ Sidebar ~ Role:", UserRole)
@@ -35,6 +36,10 @@ function AppRoutes() {
         {
           path: 'evaluatedSession',
           element: <EvaluatedSession />,
+        },
+        {
+          path: 'notification',
+          element: <Notification />,
         },
         // {
         //   element:UserRole?.role === 'teacher'? <Navigate to="/dashboard/teacher" />:<Navigate to="/dashboard/student" />,
@@ -102,6 +107,7 @@ function AppRoutes() {
       path: '/b2c/register/student',
       element: <RegisterStudent/>
     },
+
     // {
     //   path: '/forgot-password',
     //   element: <ForgotPassword/>

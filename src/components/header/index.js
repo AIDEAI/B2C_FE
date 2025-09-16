@@ -4,7 +4,7 @@ import dropdownIcon from "../../assets/Dropdown.svg";
 import { NavLink, useNavigate } from "react-router-dom";
 import searchIconSrc from "../../assets/searchIcon.svg";
 import NotificationIcon from "../../assets/bellIcon.png";
-// import { NotificationContext } from "../context/notificationContext";
+import { NotificationContext } from "../../context/notificationContext";
 
 import { MdLockOutline } from "react-icons/md";
 import CrossIcon from "../../assets/closeIcon.svg";
@@ -45,7 +45,7 @@ const Header = () => {
   const [PasswordModalOpen, setPasswordModalOpen] = useState(false);
   const UserData = JSON.parse(localStorage.getItem("UserData"));
   console.log("🚀 ~ Header ~ UserData:", UserData);
-//   const { handleOpenNotification, notifications, ReadNotification } = useContext(NotificationContext);
+  const { handleOpenNotification, notifications, ReadNotification } = useContext(NotificationContext);
 
   const dropdownRef = useRef(null);
 
@@ -107,25 +107,24 @@ const Header = () => {
     navigate("/b2c/");
   };
 
-  // const notificationCount =
-  //   ReadNotification?.notifications?.filter((item) => !item?.read).length || 0;
+  const notificationCount =ReadNotification?.notifications?.filter((item) => !item?.read).length || 0;
   // const notificationCount=ReadNotification?.notifications?.map((item)=>item?.read !== true).length
-  // console.log("notificationCount", notificationCount);
+  console.log("notificationCount", notificationCount);
   return (
     <div className="flex justify-between item-center px-5 shadow-md border-b">
       <nav className="flex justify-end w-full items-center gap-12 lg:gap-6 p-3">
         <div className="relative">
           <div
-            // onClick={handleOpenNotification}
+            onClick={handleOpenNotification}
             className="cursor-pointer rounded-full p-2 bg-gray-200 w-11 h-11 flex justify-center items-center"
           >
             <img src={NotificationIcon} alt="notification" />
           </div>
-          {/* {notificationCount > 0 && (
+          {notificationCount > 0 && (
             <span className="absolute top-1 right-1 inline-flex items-center justify-center px-2 py-1  text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full transform translate-x-1/2 -translate-y-1/2">
               {notificationCount}
             </span>
-          )} */}
+          )}
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
           <img
