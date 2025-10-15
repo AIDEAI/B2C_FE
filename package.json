@@ -15,7 +15,9 @@
     "@testing-library/jest-dom": "^6.7.0",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "@tinymce/tinymce-react": "^6.3.0",
     "@tippyjs/react": "^4.2.6",
+    "@wiris/mathtype-tinymce6": "^8.13.4",
     "axios": "^1.7.7",
     "lucide-react": "^0.457.0",
     "mathlive": "^0.107.0",
@@ -35,6 +37,7 @@
     "react-scripts": "5.0.1",
     "react-spinners": "^0.17.0",
     "react-toastify": "^10.0.5",
+    "tinymce": "^8.1.2",
     "web-vitals": "^2.1.4",
     "yup": "^1.4.0"
   },

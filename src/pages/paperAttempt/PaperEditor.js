@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, forwardRef, useState } from 'react';
 import { Send, ChevronDown, ChevronLeft, ChevronRight, Upload, X, Image } from 'lucide-react';
+import TinyMCEWithMathType from '../../components/TinyMCEWithMathType/TinyMCEWithMathType';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import Loader from '../../components/sharedUI/loader';
@@ -301,16 +302,12 @@ const PaperEditor = forwardRef(({
     const textValue = typeof currentAnswer === 'string' ? currentAnswer : (currentAnswer || '');
     
     return (
-      <textarea
+      <TinyMCEWithMathType
         value={textValue}
-        onChange={(e) => {
-          // For all text questions, just update the answer text
-          // Images are handled separately
-          handleAnswerChange(question.id, e.target.value, 'text');
+        onChange={(content) => {
+          handleAnswerChange(question.id, content || '', 'text');
         }}
-        rows={4}
-        placeholder="Type your answer here... Switch to Math mode for advanced equations."
-        className="w-full"
+        placeholder="Type your answer here... Use MathType for advanced equations."
       />
     );
   };
