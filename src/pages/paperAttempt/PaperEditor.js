@@ -3,7 +3,6 @@ import { Send, ChevronDown, ChevronLeft, ChevronRight, Upload, X, Image } from '
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import Loader from '../../components/sharedUI/loader';
-import SimpleMathEditor from '../../components/SimpleMathEditor/SimpleMathEditor';
 
 const PaperEditor = forwardRef(({ 
   sessions,
@@ -302,7 +301,7 @@ const PaperEditor = forwardRef(({
     const textValue = typeof currentAnswer === 'string' ? currentAnswer : (currentAnswer || '');
     
     return (
-      <SimpleMathEditor
+      <textarea
         value={textValue}
         onChange={(e) => {
           // For all text questions, just update the answer text
@@ -447,7 +446,8 @@ const PaperEditor = forwardRef(({
             
             {/* Answer area for this part - always show textarea */}
             <div className="mt-3 pl-4">
-              <SimpleMathEditor
+
+              <textarea
                 value={getAnswerForQuestion(part.id) || ''}
                 onChange={(e) => handleAnswerChange(part.id, e.target.value, 'text')}
                 rows={3}
@@ -515,7 +515,7 @@ const PaperEditor = forwardRef(({
                     
                     {/* Answer area for this subpart - always show textarea */}
                     <div className="mt-3 pl-4">
-                      <SimpleMathEditor
+                      <textarea
                         value={getAnswerForQuestion(subPart.id) || ''}
                         onChange={(e) => handleAnswerChange(subPart.id, e.target.value, 'text')}
                         rows={2}
