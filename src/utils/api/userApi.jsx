@@ -113,11 +113,11 @@ export const useGetSessionMutation = () =>
     },
   });
 
-  export const useGetAllSessions = (status) =>
+  export const useGetAllSessions = (status, page = 1) =>
     useQuery({
-      queryKey: ["getAllSessions",status],
+      queryKey: ["getAllSessions", status, page],
       queryFn: async () => {
-        return await client(`sessions/get-all-sessions?status=${status || '' }`);
+        return await client(`sessions/get-all-sessions?status=${status || ''}&page=${page}`);
       },
     });
 
@@ -180,7 +180,7 @@ export const useGetSessionMutation = () =>
             cacheTime: 10 * 60 * 1000, // Adjust as needed
           });
 
-          export const useGetNotification = ( search, page,notificationRead) =>{
+          export const useGetNotification = ( search, page,notificationRead, enabled = true) =>{
 
             return useQuery({
                queryKey: ["getNotification",  search, page,notificationRead],
@@ -194,10 +194,11 @@ export const useGetSessionMutation = () =>
                  // refetchOnWindowFocus: false,
                  //   refetchOnMount: false,
                  //   refetchOnReconnect: false,
-                 //   enabled: false, 
-                   staleTime: 60000,
-                   cacheTime: 3600000
-              
+                 enabled: enabled, 
+                  staleTime: 60000,
+                  cacheTime: 3600000
+             
+
              })};
 
 // export const useGetOtp = () =>

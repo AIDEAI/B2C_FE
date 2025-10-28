@@ -32,7 +32,7 @@ const Loader = () => {
     // <div className="fixed w-full h-full bg-[rgba(0,0,0,0.6)] top-0 left-0 flex justify-center items-center z-100">
     //   <FadeLoader color="#20A8D9" size={10} radius={2} />
     // </div>
-    <div className="fixed w-full h-full bg-[rgba(0,0,0,0.6)] top-0 left-0 flex justify-center items-center z-[1000]">
+    <div className="fixed w-full h-full bg-[rgba(0,0,0,0.6)] top-0 left-0 flex justify-center items-center z-[999999]">
       <div className="relative bg-white rounded-lg shadow-xl min-w-[300px] overflow-hidden">
         {/* Loading Animation and Message */}
         <div className="px-6 py-4 flex items-center gap-4">

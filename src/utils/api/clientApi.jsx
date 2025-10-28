@@ -35,7 +35,7 @@ const publicEndpoints = [
   'auth/register-student',
 //   'recovery/forgot-password',
 //   'recovery/reset-password',
-//   'notifications/user-notifications',
+  'notifications/user-notifications',
 ];
 
 async function client(endpoint,{ data, method, headers: customHeaders, ...customConfig } = {})

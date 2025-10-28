@@ -175,10 +175,12 @@ export function PastPapersProvider({ children }) {
             has_prev_page: false
           },
           totalQuestions: apiData.pagination?.total_questions || 0,
-          selectedYearRange: apiData.data.available_years ? {
-            start: Math.min(...apiData.data.available_years),
-            end: Math.max(...apiData.data.available_years)
-          } : prev.selectedYearRange
+          selectedYearRange: (prev.selectedYearRange && (prev.selectedYearRange.start || prev.selectedYearRange.end)) 
+            ? prev.selectedYearRange 
+            : (apiData.data.available_years ? {
+                start: Math.min(...apiData.data.available_years),
+                end: Math.max(...apiData.data.available_years)
+              } : prev.selectedYearRange)
          
         }));
       }

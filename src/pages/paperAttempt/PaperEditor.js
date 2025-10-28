@@ -289,7 +289,7 @@ const PaperEditor = forwardRef(({
             onChange={() => handleAnswerChange(question.id, index, 'mcq')}
             className="h-4 w-4 text-blue-600 focus:ring-blue-500"
           />
-          <span className="ml-3">{String.fromCharCode(65 + index)}) {option}</span>
+          <span className="ml-3"> {option}</span>
         </div>
       </label>
     ));
@@ -441,17 +441,18 @@ const PaperEditor = forwardRef(({
               </div>
             )}
             
-            {/* Answer area for this part - always show textarea */}
+            {/* Answer area for this part - always show TinyMCE */}
+             {part.content && part.content.length > 0 && part.subParts.length === 0 && (
             <div className="mt-3 pl-4">
-
-              <textarea
+              <TinyMCEWithMathType
                 value={getAnswerForQuestion(part.id) || ''}
-                onChange={(e) => handleAnswerChange(part.id, e.target.value, 'text')}
-                rows={3}
-                placeholder={`Type your answer for part (${part.letter}) here... Switch to Math for advanced equations.`}
-                className="w-full"
+                onChange={(content) => {
+                  handleAnswerChange(part.id, content || '', 'text');
+                }}
+                placeholder={`Type your answer for part (${part.letter}) here... Use MathType for advanced equations.`}
               />
             </div>
+             )}
             
             {/* Image upload for this part if isDraw is true */}
             {part.isDraw && (
@@ -510,14 +511,14 @@ const PaperEditor = forwardRef(({
                       </div>
                     )}
                     
-                    {/* Answer area for this subpart - always show textarea */}
+                    {/* Answer area for this subpart - always show TinyMCE */}
                     <div className="mt-3 pl-4">
-                      <textarea
+                      <TinyMCEWithMathType
                         value={getAnswerForQuestion(subPart.id) || ''}
-                        onChange={(e) => handleAnswerChange(subPart.id, e.target.value, 'text')}
-                        rows={2}
-                        placeholder={`Type your answer for part (${part.letter})(${subPart.label || subPart.letter}) here... Switch to Math for equations.`}
-                        className="w-full"
+                        onChange={(content) => {
+                          handleAnswerChange(subPart.id, content || '', 'text');
+                        }}
+                        placeholder={`Type your answer for part (${part.letter})(${subPart.label || subPart.letter}) here... Use MathType for advanced equations.`}
                       />
                     </div>
                     
@@ -853,7 +854,7 @@ const PaperEditor = forwardRef(({
                             <div>
                               <div className="flex items-start mb-4">
                                 <div className="bg-blue-100 text-blue-700 rounded-full h-fit p-2 w-fit flex items-center justify-center mr-3 flex-shrink-0">
-                                  {question.question_number || '?'}
+                                  Q{question.question_number || ''}
                                 </div>
                                 <div className="flex-1">
                                   {/* Main Question Content */}

@@ -1,19 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, ChevronDown, Edit, Trash2, Eye, Plus } from 'lucide-react';
 import { useGetAllSessions } from '../../utils/api/userApi';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 const Sessions = () => {
   const [statusFilter, setStatusFilter] = useState('All');
-  const { data: sessions, isLoading: isLoadingSessions, error: errorSessions } = useGetAllSessions(statusFilter);
+  const [currentPage, setCurrentPage] = useState(1);
+  const { data: sessions, isLoading: isLoadingSessions, error: errorSessions } = useGetAllSessions(statusFilter, currentPage);
   console.log("🚀 ~ Sessions ~ sessions:", sessions);
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
   const [sortField, setSortField] = useState('');
   const [sortDirection, setSortDirection] = useState('asc');
 
   const statusOptions = ['All', 'In Progress', 'Submitted', 'Graded'];
+
+  // Reset page to 1 when status filter changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [statusFilter]);
 
   // Use actual data if available, otherwise use mock data
   const sessionData = sessions?.data 

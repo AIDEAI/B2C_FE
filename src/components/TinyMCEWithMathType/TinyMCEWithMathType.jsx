@@ -64,8 +64,8 @@ const TinyMCEWithMathType = ({ value, onChange, placeholder = '' }) => {
     height: 400,
     menubar: false,
     branding: false,
-    plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table wordcount tiny_mce_wiris',
-    toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | tiny_mce_wiris_formulaEditor tiny_mce_wiris_formulaEditorChemistry | code preview fullscreen',
+    plugins: 'advlist autolink lists anchor searchreplace visualblocks code fullscreen insertdatetime media table wordcount tiny_mce_wiris',
+    toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent  | tiny_mce_wiris_formulaEditor tiny_mce_wiris_formulaEditorChemistry ',
     extended_valid_elements: '*[*]',
     draggable_modal: true,
     placeholder,
@@ -74,12 +74,29 @@ const TinyMCEWithMathType = ({ value, onChange, placeholder = '' }) => {
       tiny_mce_wiris: wirisPluginUrl
     },
     base_url: `${basePath}/tinymce`,
-    suffix: '.min'
+    suffix: '.min',
+    // Prevent automatic paragraph wrapping
+    forced_root_block: '',
+    force_br_newlines: true,
+    force_p_newlines: false,
+    remove_trailing_brs: true,
+    element_format: 'html',
+    entities: '160,nbsp,38,amp,60,lt,62,gt',
+    remove_script_host: false,
+    convert_urls: false
   }), [basePath, wirisPluginUrl, placeholder]);
 
   const handleEditorChange = (content) => {
     if (onChange) {
-      onChange(content);
+      // Remove paragraph tags if they still appear
+      let cleanContent = content;
+      if (cleanContent && typeof cleanContent === 'string') {
+        // Remove opening and closing p tags, but preserve content inside
+        cleanContent = cleanContent.replace(/^<p[^>]*>|<\/p>$/g, '');
+        // Also handle cases where there are multiple p tags
+        cleanContent = cleanContent.replace(/<p[^>]*>/g, '').replace(/<\/p>/g, '');
+      }
+      onChange(cleanContent);
     }
   };
 

@@ -263,6 +263,51 @@ const EvaluatedSession = () => {
     );
   };
 
+  // Helper function to render main content - moved to global scope
+  const renderMainContent = (item) => {
+      if (!item.mainContent || item.mainContent.length === 0) return null;
+
+      const validContent = item.mainContent.filter(content => 
+        content.content && 
+        ((content.type === 'text' && content.content.trim()) || 
+         (content.type === 'image' && content.content) ||
+         (content.type === 'table' && content.content))
+      );
+
+      if (validContent.length === 0) return null;
+
+      return (
+        <div className="mb-4 space-y-3">
+          {validContent.map((contentItem, index) => (
+            <div key={index}>
+              {contentItem.type === 'text' && (
+                <p className="text-gray-700 leading-relaxed text-base whitespace-pre-wrap">{contentItem.content}</p>
+              )}
+              <div className="flex justify-start items-center flex-wrap gap-2">
+                {contentItem.type === 'image' && (
+                  <div className="relative group">
+                    <img 
+                      src={contentItem.content} 
+                      alt="Question content" 
+                      className="w-full h-48 object-cover rounded border cursor-pointer shadow-sm hover:shadow-md transition-shadow" 
+                    /> 
+                    <div 
+                      className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 rounded transition-all duration-200 flex items-center justify-center cursor-pointer"
+                      onClick={() => openImageModal([contentItem.content], 0, "Question Image")}
+                    >
+                      <span className="text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity bg-black bg-opacity-70 px-2 py-1 rounded">
+                        Click to zoom
+                      </span>
+                    </div> 
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    };
+
   // Main student answer rendering function
   const renderStudentAnswer = (item) => {
     console.log("🚀 ~ renderStudentAnswer item:", item)
@@ -320,49 +365,6 @@ const EvaluatedSession = () => {
               </div>
             </div>
           )}
-        </div>
-      );
-    };
-
-    // Helper function to render main content
-    const renderMainContent = (item) => {
-      if (!item.mainContent || item.mainContent.length === 0) return null;
-
-      const validContent = item.mainContent.filter(content => 
-        content.content && 
-        ((content.type === 'text' && content.content.trim()) || (content.type === 'image' && content.content))
-      );
-
-      if (validContent.length === 0) return null;
-
-      return (
-        <div className="mb-4 space-y-3">
-          {validContent.map((contentItem, index) => (
-            <div key={index}>
-              {contentItem.type === 'text' && (
-                <p className="text-gray-700 leading-relaxed text-base whitespace-pre-wrap">{contentItem.content}</p>
-              )}
-              <div className="flex justify-start items-center flex-wrap gap-2">
-                {contentItem.type === 'image' && (
-                  <div className="relative group">
-                    <img 
-                      src={contentItem.content} 
-                      alt="Question content" 
-                      className="w-full h-48 object-cover rounded border cursor-pointer shadow-sm hover:shadow-md transition-shadow" 
-                    /> 
-                    <div 
-                      className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 rounded transition-all duration-200 flex items-center justify-center cursor-pointer"
-                      onClick={() => openImageModal([contentItem.content], 0, "Question Image")}
-                    >
-                      <span className="text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity bg-black bg-opacity-70 px-2 py-1 rounded">
-                        Click to zoom
-                      </span>
-                    </div> 
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
         </div>
       );
     };
@@ -1030,12 +1032,13 @@ const EvaluatedSession = () => {
                   {/* Question Header */}
                   <div className="flex justify-between items-start mb-3">
                     <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
+                      <div className="flex items-start gap-2 mb-2">
                         <span className="bg-blue-100 text-blue-700 rounded-full h-6 w-auto px-2 flex items-center justify-center flex-shrink-0 font-medium">
                           Q{question.question_number || questionIndex + 1}
                         </span>
                         <span className="text-sm text-gray-500">
-                          {question.question_type || 'Question'}
+                  {renderMainContent(question)}
+                        
                         </span>
                       </div>
                     </div>
@@ -1044,15 +1047,16 @@ const EvaluatedSession = () => {
                     </span>
                   </div>
 
+                  {/* Main Content - Display right after question number */}
+
                   {/* Question Content */}
-                  <div className="mb-3">
-                    {/* Section */}
+                  {/* <div className="mb-3">
                     {question.section && (
                       <div className="mb-2 p-2 bg-gray-100 rounded border border-gray-200">
                         <p className="text-sm text-gray-600 font-medium">{question.section}</p>
                       </div>
                     )}
-                  </div>
+                  </div> */}
 
                   {/* Student Answer Display */}
                   {renderStudentAnswer(question)}

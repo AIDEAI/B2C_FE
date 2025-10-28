@@ -18,7 +18,8 @@ console.log(notificationRead,'notificationRead')
     const {data:ReadNotification, refetch:refetchNotifications}=useGetNotification(
       '',
       1,
-      notificationRead
+      notificationRead,
+      !!data?.userId // Only enable when user is authenticated
     )
     console.log('notification',ReadNotification)
   const handleOpenNotification=()=>{
